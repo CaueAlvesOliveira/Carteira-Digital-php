@@ -19,6 +19,7 @@
         if (!is_null($usuario) && !is_null($senha)) {
             if ($usuario == "admin" && password_verify($senha, $senhaComHash)) {
                 $_SESSION["logado"] = true;
+                $_SESSION["usuario"] = $usuario;
                 header("Location: index.php");
                 exit();
             } else {
