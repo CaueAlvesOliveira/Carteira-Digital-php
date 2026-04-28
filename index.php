@@ -8,12 +8,25 @@
     }    
     
     $usuario = $_SESSION["usuario"] ?? null;
+
+     if (!isset($_SESSION['historico'])) {
+        $_SESSION['historico'] = [];
+    }
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['descricao']) && !empty($_POST['valor'])) {
+        $_SESSION['historico'][] = [
+            date_default_timezone_set('America/Sao_paulo'),
+            'data'      => date('d/m/Y - H:i'),
+            'descricao' => $_POST['descricao'],
+            'tipo'      => $_POST['tipo'],
+            'valor'     => $_POST['valor']
+        ];
+    }
     
     include "funcoes.php";
     informaReceitaOuDespesa();
     saldo();
 ?>
-
 
 <Div style="display: flex; gap: 50rem; align-items: center;">
     <h1>My Wallet</h1>
@@ -58,4 +71,6 @@
     <button type="submit">Adicionar</button>
 </form>
 
-<button>Ver Detalhes do Histórico</button>
+<?php 
+    echo '<button onclick="location.href=\'historico.php\'">Ver Detalhes do Histórico</button>';
+?>

@@ -20,4 +20,12 @@
         $saldo = $_SESSION["totalReceitas"] - $_SESSION["totalDespesas"];
         return $saldo;
     }
+
+    function zerarHistorico() {
+        unset($_SESSION['historico']);
+        unset($_SESSION['totalReceitas']);
+        unset($_SESSION['totalDespesas']);
+        header('Location: historico.php');
+        exit;
+    }
 ?>
