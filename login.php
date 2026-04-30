@@ -16,16 +16,6 @@
         password_hash("admin", PASSWORD_DEFAULT);
         $senhaComHash = '$2y$10$k9Zz93P4rkgeJqpXIGGm3OORdU.qODsAIIwJyUp7SlTo3Wji1Rnna';
 
-        if (!is_null($usuario) && !is_null($senha)) {
-            if ($usuario == "admin" && password_verify($senha, $senhaComHash)) {
-                $_SESSION["logado"] = true;
-                $_SESSION["usuario"] = $usuario;
-                header("Location: index.php");
-                exit();
-            } else {
-                echo "Usuario ou senha incorretos!";
-            }
-        }
     }
 ?>
 
@@ -79,6 +69,19 @@
                         <label for="senha" class="mb-2 block text-sm font-medium text-slate-200">Senha</label>
                         <input type="text" name="senha" placeholder="Insira sua senha" class="w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20">
                     </div>
+
+                    <?php 
+                        if (!is_null($usuario) && !is_null($senha)) {
+                            if ($usuario == "admin" && password_verify($senha, $senhaComHash)) {
+                            $_SESSION["logado"] = true;
+                            $_SESSION["usuario"] = $usuario;
+                            header("Location: index.php");
+                            exit();
+                        } else {
+                            echo "Usuario ou senha incorretos!";
+                        }
+                    }
+                    ?>
 
                     <input type="submit" value="Entrar" class="w-full cursor-pointer rounded-2xl bg-cyan-500 px-4 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400">
                 </form>
