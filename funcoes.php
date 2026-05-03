@@ -10,9 +10,9 @@
         }
 
         if($tipoReceita == "receita"){
-            $_SESSION["totalReceitas"] += $valorReceita;
+            $_SESSION["totalReceitas"] += (float)$valorReceita;
         } else if($tipoReceita == "despesa"){
-            $_SESSION["totalDespesas"] += $valorReceita;
+            $_SESSION["totalDespesas"] += (float)$valorReceita;
         }
     };
 
@@ -30,6 +30,6 @@
     }
 
     function validarHistorico(){
-        return $_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['descricao']) && !empty($_POST['valor']);
+        return $_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['descricao']) && !empty($_POST['valor']); 
     }
 ?>

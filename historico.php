@@ -2,6 +2,13 @@
 <?php 
     session_start();
 
+    $estaLogado = $_SESSION["logado"] ?? false;
+
+    if(!$estaLogado){
+        header("Location: login.php");
+        exit();
+    }
+
     include "funcoes.php";
 
     if (isset($_GET['zerar'])) {
@@ -9,6 +16,7 @@
     }
     
     $historico = $_SESSION['historico'] ?? [];
+    $totalDespesas = $_SESSION['totalDespesas'] ?? 0;
 ?>
 
 <!DOCTYPE html>
@@ -43,6 +51,7 @@
                             <th class="px-5 py-4">Descrição</th>
                             <th class="px-5 py-4">Categoria</th>
                             <th class="px-5 py-4">Valor</th>
+                            <th class="px-5 py-4">Relevância</th>
                             <th class="px-5 py-4 text-center">Ações</th>
                         </tr>
                     </thead>
@@ -68,6 +77,16 @@
                                             echo "+ " . "R$" . number_format($item['valor'], 2, ',', '.'); 
                                         } else {
                                              echo "- " ."R$" . number_format($item['valor'], 2, ',', '.');
+                                        }
+                                    ?>
+                                </td>
+                                <td class="px-5 py-4 text-sm">
+                                    <?php
+                                        if($item['tipo'] == 'despesa' && $totalDespesas > 0) {
+                                            $relevancia = ($item['valor'] / $totalDespesas) * 100;
+                                            echo number_format($relevancia, 2, ',', '.') . '%';
+                                        } else {
+                                            echo '-';
                                         }
                                     ?>
                                 </td>
