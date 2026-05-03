@@ -1,25 +1,9 @@
 <?php 
     session_start();
 
-    $estaLogado = $_SESSION["logado"] ?? false;
-    
-    if ($estaLogado) {
-        header("Location: index.php");
-        exit();
-    }
-
     $usuario = $_POST["nome"] ?? null;
     $senha = $_POST["senha"] ?? null;
-        
-    if($_SERVER["REQUEST_METHOD"] == "POST") {
-            
-        $usuario = $_POST["nome"] ?? null;
-        $senha = $_POST["senha"] ?? null;
-        
-        password_hash("admin", PASSWORD_DEFAULT);
-        $senhaComHash = '$2y$10$k9Zz93P4rkgeJqpXIGGm3OORdU.qODsAIIwJyUp7SlTo3Wji1Rnna';
 
-    }
 ?>
 
 <!DOCTYPE html>
@@ -75,16 +59,23 @@
                     </div>
 
                     <?php 
-                        if (!is_null($usuario) && !is_null($senha)) {
-                            if ($usuario == "admin" && password_verify($senha, $senhaComHash)) {
-                            $_SESSION["logado"] = true;
-                            $_SESSION["usuario"] = $usuario;
-                            header("Location: index.php");
-                            exit();
-                        } else {
-                            echo "Usuario ou senha incorretos!";
+                        $senhaComHash = '$2y$10$k9Zz93P4rkgeJqpXIGGm3OORdU.qODsAIIwJyUp7SlTo3Wji1Rnna'; // senha: admin
+
+                        if($_SERVER["REQUEST_METHOD"] == "POST") {
+                            $usuario = $_POST["nome"] ?? null;
+                            $senha = $_POST["senha"] ?? null;
+
+                            if (!is_null($usuario) && !is_null($senha)) {
+                                if ($usuario == "admin" && password_verify($senha, $senhaComHash)) {
+                                    $_SESSION["logado"] = true;
+                                    $_SESSION["usuario"] = $usuario;
+                                    header("Location: index.php");
+                                    exit();
+                                } else {
+                                    echo "<div style='text-align: center; color: red'>Usuário ou senha incorretos!</div>";
+                                }
+                            }
                         }
-                    }
                     ?>
 
                     <input type="submit" value="Entrar" class="w-full cursor-pointer rounded-2xl bg-cyan-500 px-4 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400">
