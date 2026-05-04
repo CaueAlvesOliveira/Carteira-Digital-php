@@ -30,6 +30,12 @@
     }
 
     function validarHistorico(){
-        return $_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['descricao']) && !empty($_POST['valor']); 
+        if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['descricao']) && !empty($_POST['valor'])){
+            echo "";
+            return true;
+        } else {
+            echo "<div style='text-align: center; color: red'>Preencha todos os dados</div>";
+            return false;
+        }; 
     }
 ?>

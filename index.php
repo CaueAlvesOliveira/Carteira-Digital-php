@@ -15,16 +15,6 @@
 
     include "funcoes.php";
 
-    if(validarHistorico()){
-        $_SESSION['historico'][] = [
-            date_default_timezone_set('America/Sao_paulo'),
-            'data'      => date('d/m/Y - H:i'),
-            'descricao' => $_POST['descricao'],
-            'tipo'      => $_POST['tipo'],
-            'valor'     => $_POST['valor']
-        ];
-    }
-    
     informaReceitaOuDespesa();
     saldo();
 ?>
@@ -98,7 +88,22 @@
                             <option value="despesa">Despesa</option>
                         </select>
                     </div>
-                    <button type="submit" class="w-full rounded-2xl bg-cyan-500 px-4 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400">Adicionar</button>
+                    <button type="submit" name="adicionar" class="w-full rounded-2xl bg-cyan-500 px-4 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400">Adicionar</button>
+
+                    <?php 
+                    if(isset($_POST['adicionar'])){
+                        if(validarHistorico()){
+                            $_SESSION['historico'][] = [
+                                date_default_timezone_set('America/Sao_paulo'),
+                                'data'      => date('d/m/Y - H:i'),
+                                'descricao' => $_POST['descricao'],
+                                'tipo'      => $_POST['tipo'],
+                                'valor'     => $_POST['valor']
+                            ];
+                        }
+                    }
+                    ?>
+
                 </form>
 
                 <div class="mt-6">
